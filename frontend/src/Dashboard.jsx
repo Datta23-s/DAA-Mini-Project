@@ -29,17 +29,19 @@ const Dashboard = () => {
   }, [user, activeTab]);
 
   const fetchData = async () => {
+    if (!user) return;
     setLoading(true);
     try {
+      const userId = user.id || user._id;
       const [recs, explore, friends] = await Promise.all([
-        api.get(`/recommendations/${user.id}`).catch(() => ({ data: [] })),
+        api.get(`/recommendations/${userId}`).catch(() => ({ data: [] })),
         api.get(`/users/explore`).catch(() => ({ data: [] })),
         api.get(`/users/friends`).catch(() => ({ data: [] }))
       ]);
 
-      setRecommendations(recs.data);
-      setExploreUsers(explore.data);
-      setMyFriends(friends.data);
+      setRecommendations(recs?.data || []);
+      setExploreUsers(explore?.data || []);
+      setMyFriends(friends?.data || []);
     } catch (err) {
       console.error(err);
     }
@@ -77,10 +79,10 @@ const Dashboard = () => {
 
         <div className="px-6 mb-8">
           <div className="flex items-center gap-3 p-3 bg-gray-800/50 rounded-xl border border-gray-700">
-            <img src={user.avatar} alt="Profile" className="w-10 h-10 rounded-lg border-2 border-green-500" />
-            <div>
-              <p className="text-sm font-semibold text-white">{user.name}</p>
-              <p className="text-[10px] text-gray-400 uppercase tracking-wider">Network Level: {user.networkLevel || 'Elite'}</p>
+            <img src={user?.avatar || `https://i.pravatar.cc/150?u=${user?.email}`} alt="Profile" className="w-10 h-10 rounded-lg border-2 border-green-500" />
+            <div className="overflow-hidden">
+              <p className="text-sm font-semibold text-white truncate">{user?.name || 'User'}</p>
+              <p className="text-[10px] text-gray-400 uppercase tracking-wider">Network Level: {user?.networkLevel || 'Elite'}</p>
             </div>
           </div>
         </div>
@@ -146,10 +148,10 @@ const Dashboard = () => {
                   <ForceGraph2D
                     graphData={{
                       nodes: [
-                        { id: user.id, name: user.name, color: '#2d5a4c' },
-                        ...myFriends.map(f => ({ id: f._id, name: f.name, color: '#bdc3c7' }))
+                        { id: user?.id || user?._id, name: user?.name || 'Me', color: '#2d5a4c' },
+                        ...(myFriends || []).map(f => ({ id: f._id || f.id, name: f.name, color: '#bdc3c7' }))
                       ],
-                      links: myFriends.map(f => ({ source: user.id, target: f._id }))
+                      links: (myFriends || []).map(f => ({ source: user?.id || user?._id, target: f._id || f.id }))
                     }}
                     nodeCanvasObject={(node, ctx) => {
                       const size = 10;
@@ -161,7 +163,7 @@ const Dashboard = () => {
                       ctx.lineWidth = 2;
                       ctx.stroke();
                       
-                      const label = node.name.split(' ').map(n=>n[0]).join('');
+                      const label = (node.name || '').split(' ').map(n=>n[0]).join('');
                       ctx.font = '6px Inter';
                       ctx.textAlign = 'center';
                       ctx.textBaseline = 'middle';

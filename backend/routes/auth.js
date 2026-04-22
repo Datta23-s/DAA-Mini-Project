@@ -26,7 +26,17 @@ router.post('/signup', async (req, res) => {
     await user.save();
     
     const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: '7d' });
-    res.json({ token, user: { id: user._id, name: user.name, email: user.email } });
+    res.json({ 
+      token, 
+      user: { 
+        id: user._id, 
+        name: user.name, 
+        email: user.email,
+        avatar: user.avatar,
+        interests: user.interests,
+        networkLevel: user.networkLevel || 'Elite'
+      } 
+    });
   } catch (err) {
     res.status(500).json({ message: 'Server error during signup' });
   }
@@ -44,7 +54,17 @@ router.post('/login', async (req, res) => {
     if (!isMatch) return res.status(400).json({ message: 'Invalid credentials' });
 
     const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: '7d' });
-    res.json({ token, user: { id: user._id, name: user.name, email: user.email } });
+    res.json({ 
+      token, 
+      user: { 
+        id: user._id, 
+        name: user.name, 
+        email: user.email,
+        avatar: user.avatar,
+        interests: user.interests,
+        networkLevel: user.networkLevel || 'Elite'
+      } 
+    });
   } catch (err) {
     res.status(500).json({ message: 'Server error during login' });
   }

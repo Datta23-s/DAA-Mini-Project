@@ -8,7 +8,16 @@ const Relationship = require('../models/Relationship');
 router.get('/me', auth, async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select('-password');
-    res.json(user);
+    if (!user) return res.status(404).json({ message: 'User not found' });
+    
+    res.json({
+      id: user._id,
+      name: user.name,
+      email: user.email,
+      avatar: user.avatar,
+      interests: user.interests,
+      networkLevel: user.networkLevel || 'Elite'
+    });
   } catch (err) {
     res.status(500).send('Server Error');
   }
