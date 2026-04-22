@@ -20,7 +20,7 @@ router.post('/signup', async (req, res) => {
       email,
       password: hashedPassword,
       interests: interests || [],
-      avatar: `https://i.pravatar.cc/150?u=${email}`
+      avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=2d5a4c&color=fff&size=150`
     });
 
     await user.save();

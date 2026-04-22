@@ -28,7 +28,7 @@ const UserCard = ({ user, actionLabel, onAction, actionIcon }) => {
   return (
     <div className="bg-white rounded-2xl border border-gray-200 p-5 flex flex-col items-center gap-3 hover:shadow-lg transition-shadow">
       <img
-        src={user.avatar || `https://i.pravatar.cc/150?u=${user.email || user._id}`}
+        src={user.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=2d5a4c&color=fff&size=150`}
         alt={user.name}
         className="w-16 h-16 rounded-xl border-2 border-gray-200"
       />
@@ -127,7 +127,7 @@ const Dashboard = () => {
 
         <div className="px-6 mb-8">
           <div className="flex items-center gap-3 p-3 bg-gray-800/50 rounded-xl border border-gray-700">
-            <img src={user?.avatar || `https://i.pravatar.cc/150?u=${user?.email}`} alt="Profile" className="w-10 h-10 rounded-lg border-2 border-green-500" />
+            <img src={user?.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(user?.name || 'U')}&background=2d5a4c&color=fff&size=150`} alt="Profile" className="w-10 h-10 rounded-lg border-2 border-green-500" />
             <div className="overflow-hidden">
               <p className="text-sm font-semibold text-white truncate">{user?.name || 'User'}</p>
               <p className="text-[10px] text-gray-400 uppercase tracking-wider">Network Level: {user?.networkLevel || 'Elite'}</p>
