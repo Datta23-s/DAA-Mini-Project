@@ -8,8 +8,56 @@ import {
 } from 'lucide-react';
 import ForceGraph2D from 'react-force-graph-2d';
 
-// --- Components ---
-// ... (omitting NavItem and UserCard for brevity if they haven't changed)
+// --- Sub-Components ---
+const NavItem = ({ icon, label, active, onClick }) => (
+  <button
+    onClick={onClick}
+    className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${
+      active
+        ? 'bg-blue-500/10 text-blue-400'
+        : 'text-gray-400 hover:text-white hover:bg-gray-800/50'
+    }`}
+  >
+    {icon}
+    <span>{label}</span>
+  </button>
+);
+
+const UserCard = ({ user, actionLabel, onAction, actionIcon }) => {
+  const ActionIcon = actionIcon || Share2;
+  return (
+    <div className="bg-white rounded-2xl border border-gray-200 p-5 flex flex-col items-center gap-3 hover:shadow-lg transition-shadow">
+      <img
+        src={user.avatar || `https://i.pravatar.cc/150?u=${user.email || user._id}`}
+        alt={user.name}
+        className="w-16 h-16 rounded-xl border-2 border-gray-200"
+      />
+      <div className="text-center">
+        <p className="font-semibold text-gray-900">{user.name}</p>
+        <p className="text-xs text-gray-400">{user.networkLevel || 'Explorer'}</p>
+      </div>
+      {user.interests && user.interests.length > 0 && (
+        <div className="flex flex-wrap justify-center gap-1">
+          {user.interests.slice(0, 3).map((tag, i) => (
+            <span key={i} className="px-2 py-0.5 bg-blue-50 text-blue-600 rounded-full text-[10px] font-bold">
+              {tag}
+            </span>
+          ))}
+        </div>
+      )}
+      {user.matchScore && (
+        <div className="text-xs font-bold text-green-600">{Math.round(user.matchScore)}% Match</div>
+      )}
+      <button
+        onClick={() => onAction(user)}
+        className="w-full mt-1 bg-[#2d5a4c] text-white py-2 rounded-xl text-sm font-semibold hover:bg-[#3a7363] transition-colors flex items-center justify-center gap-2"
+      >
+        <ActionIcon size={14} />
+        {actionLabel}
+      </button>
+    </div>
+  );
+};
 
 const Dashboard = () => {
   const [recommendations, setRecommendations] = useState([]);
