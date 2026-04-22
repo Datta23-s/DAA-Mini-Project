@@ -1,0 +1,23 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  @apply bg-[#f0f4f9] text-gray-800 antialiased;
+}
+
+.dark-sidebar {
+  @apply bg-[#2c3e50] text-white;
+}
+
+.glass-card {
+  @apply bg-white/80 backdrop-blur-md border border-white/20 shadow-lg;
+}
+
+.neural-grid {
+  background-image: radial-gradient(circle, #d1d9e6 1px, transparent 1px);
+  background-size: 20px 20px;
+}
