@@ -34,17 +34,7 @@ const UserCard = ({ user, actionLabel, onAction, actionIcon }) => {
       />
       <div className="text-center">
         <p className="font-semibold text-gray-900">{user.name}</p>
-        <p className="text-xs text-gray-400">{user.networkLevel || 'Explorer'}</p>
       </div>
-      {user.interests && user.interests.length > 0 && (
-        <div className="flex flex-wrap justify-center gap-1">
-          {user.interests.slice(0, 3).map((tag, i) => (
-            <span key={i} className="px-2 py-0.5 bg-blue-50 text-blue-600 rounded-full text-[10px] font-bold">
-              {tag}
-            </span>
-          ))}
-        </div>
-      )}
       {user.matchScore && (
         <div className="text-xs font-bold text-green-600">{Math.round(user.matchScore)}% Match</div>
       )}
@@ -130,7 +120,6 @@ const Dashboard = () => {
             <img src={user?.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(user?.name || 'U')}&background=2d5a4c&color=fff&size=150`} alt="Profile" className="w-10 h-10 rounded-lg border-2 border-green-500" />
             <div className="overflow-hidden">
               <p className="text-sm font-semibold text-white truncate">{user?.name || 'User'}</p>
-              <p className="text-[10px] text-gray-400 uppercase tracking-wider">Network Level: {user?.networkLevel || 'Elite'}</p>
             </div>
           </div>
         </div>
