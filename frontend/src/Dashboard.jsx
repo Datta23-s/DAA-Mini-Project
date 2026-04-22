@@ -139,7 +139,6 @@ const Dashboard = () => {
           <NavItem icon={<LayoutDashboard size={20} />} label="Dashboard" active={activeTab === 'Dashboard'} onClick={() => setActiveTab('Dashboard')} />
           <NavItem icon={<Compass size={20} />} label="Explore" active={activeTab === 'Explore'} onClick={() => setActiveTab('Explore')} />
           <NavItem icon={<Share2 size={20} />} label="My Network" active={activeTab === 'My Network'} onClick={() => setActiveTab('My Network')} />
-          <NavItem icon={<Settings size={20} />} label="Settings" active={activeTab === 'Settings'} onClick={() => setActiveTab('Settings')} />
         </nav>
 
         <div className="p-4 border-t border-gray-700 space-y-1">
@@ -250,33 +249,6 @@ const Dashboard = () => {
             </div>
           )}
 
-          {activeTab === 'Settings' && (
-            <div className="flex-1 p-8 max-w-2xl">
-              <h2 className="text-3xl font-bold mb-8">Profile Settings</h2>
-              <div className="bg-white p-8 rounded-3xl border border-gray-200 space-y-6">
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Display Name</label>
-                  <input type="text" defaultValue="Alex Rivera" className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3" />
-                </div>
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">My Interests (DAA Tags)</label>
-                  <div className="flex flex-wrap gap-2">
-                    {['Dijkstra', 'Graph Theory', 'Neural Networks', 'AI Optimization'].map(tag => (
-                      <span key={tag} className="px-4 py-2 bg-blue-50 text-blue-600 rounded-full text-xs font-bold border border-blue-100 flex items-center gap-2">
-                        {tag} <button className="hover:text-red-500">×</button>
-                      </span>
-                    ))}
-                    <button className="px-4 py-2 border-2 border-dashed border-gray-200 text-gray-400 rounded-full text-xs font-bold hover:border-blue-400 hover:text-blue-400 transition-colors">
-                      + Add Tag
-                    </button>
-                  </div>
-                </div>
-                <button className="bg-[#2d5a4c] text-white px-8 py-3 rounded-2xl font-bold hover:shadow-lg transition-all">
-                  Save Changes
-                </button>
-              </div>
-            </div>
-          )}
         </div>
       </main>
     </div>
