@@ -7,8 +7,7 @@ const Signup = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    password: '',
-    interests: ''
+    password: ''
   });
   const [error, setError] = useState('');
   const { signup } = useAuth();
@@ -17,8 +16,7 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const interestsArray = formData.interests.split(',').map(i => i.trim()).filter(i => i);
-      await signup({ ...formData, interests: interestsArray });
+      await signup(formData);
       navigate('/');
     } catch (err) {
       setError(err.response?.data?.message || 'Registration failed. Try again.');
@@ -79,15 +77,6 @@ const Signup = () => {
             />
           </div>
 
-          <div className="relative">
-            <BookOpen className="absolute left-4 top-4 text-gray-400" size={18} />
-            <textarea
-              className="w-full bg-gray-50 border border-gray-100 rounded-2xl py-4 pl-12 pr-4 focus:ring-2 focus:ring-blue-500 transition-all outline-none min-h-[100px]"
-              placeholder="Interests (comma separated, e.g. DAA, Dijkstra, AI)"
-              value={formData.interests}
-              onChange={(e) => setFormData({ ...formData, interests: e.target.value })}
-            />
-          </div>
 
           <button
             type="submit"
